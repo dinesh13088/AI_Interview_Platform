@@ -1,0 +1,68 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8000:8000"
+    develop:
+      watch:
+       
+        - action: sync
+          path: ./backend
+          target: /app
+          ignore:
+            - .venv/
+            - __pycache__/
+            - "*.pyc"
+            - .git/
+        - action: rebuild
+          path: ./backend/requirements.txt
+    environment:
+      - DB_HOST=db
+      - DB_NAME=app_db
+      - DB_USER=user
+      - DB_PASSWORD=password
+      - DB_PORT=5432
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - /usr/src/app/node_modules
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend
+          target: /usr/src/app
+          ignore:
+            - node_modules/
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - backend
+
+ 
+  db:
+    image: postgres:16-alpine
+    restart: always
+    environment:
+      - POSTGRES_DB=ai_interview_db
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d ai_interview_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:

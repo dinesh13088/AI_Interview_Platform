@@ -1,0 +1,9 @@
+asgiref==3.12.1
+django==6.0.7
+django-filter==26.1
+djangorestframework==3.17.1
+markdown==3.10.2
+psycopg==3.3.4
+psycopg-binary==3.3.4
+sqlparse==0.5.5
+typing-extensions==4.16.0
