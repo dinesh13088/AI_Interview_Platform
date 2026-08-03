@@ -1,11 +1,10 @@
 
 import './App.css'
+import Login from './Pages/Login'
 
-function App() {
-
-  return (
-    <h1 className='text-4xl font-bold underline'>hello world</h1>
-  )
+export default function App() {
+  return <div className='flex h-screen items-center justify-center'>
+  <Login/> 
+  </div>
 }
 
-export default App
