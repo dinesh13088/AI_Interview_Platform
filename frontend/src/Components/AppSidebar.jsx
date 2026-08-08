@@ -11,7 +11,7 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
-} from "@/components/ui/sidebar"
+} from "@/Components/ui/sidebar"
 import {
   Home, User, FileText, BriefcaseBusiness, Pin, Bot,
   MailOpen, Target, ChartColumn, Bell, Settings, LogOut, Sparkles,
