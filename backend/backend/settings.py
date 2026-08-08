@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     "apps.accounts",
     'corsheaders',
+    'apps.candidates',
 ]
 
 REST_FRAMEWORK = {
@@ -154,3 +155,8 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 CORS_ALLOW_CREDENTIALS = True
+
+MEDIA_ROOT = BASE_DIR/'media'
+MEDIA_URL = '/media/'
+
+AUTH_USER_MODEL = 'accounts.Account'

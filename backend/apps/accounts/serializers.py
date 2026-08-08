@@ -70,10 +70,19 @@ class LoginSerializer(serializers.Serializer):
             raise serializers.ValidationError("Must include both email and password")
         
         try:
-            # Try to find user
+            
             user = Account.objects.get(email=email.lower())
+            try:
+                candidate = user.canidates_profile
+            except user.canidates_profile.RelatedObjectDoesNotExist:
+                raise serializers.ValidationError("No candidate profile found for this account.")
+            
+            
+            
             print(f"User found: {user.username}")
             print(f"Stored hash: {user.password}")
+
+            print(f"candidate:",{candidate.first_name})
         except Account.DoesNotExist:
             print("User NOT found!")
             raise serializers.ValidationError("Invalid email or password")
@@ -93,4 +102,5 @@ class LoginSerializer(serializers.Serializer):
         
         print("Login successful!")
         data['user'] = user
+        data['candidate']=candidate
         return data

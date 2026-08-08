@@ -1,7 +1,11 @@
 import { Button, Card, Label, TextInput, Select } from "flowbite-react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useState,useEffect } from "react";
 import { Dialogue } from "../Components/Dialogue";
+import { create } from "../api/auth.api";
+import {useDispatch} from 'react-redux'
+import { setUser } from "../store/CanidateSlice";
+import { setAccessToken } from "../store/AuthSlice";
 
 
 export default function Register() {
@@ -14,14 +18,36 @@ const [showAlert, setShowAlert] = useState(false);
     password:"",
     confirm_password:"",
     role:""
-
   })
+  const navigate=useNavigate()
 
-  const handleSubmit = (e) => {
+  const dispatch=useDispatch()
+
+  const handleSubmit = async(e) => {
     e.preventDefault();
     
     setAlertMessage("Registration successful! Welcome aboard!");
     setShowAlert(true);
+    try{
+      console.log(formData)
+      const response= await create(formData)
+      console.log(response.data)
+
+      dispatch(setUser(response.data))
+      const tokens=response.data.tokens.access
+      
+
+      dispatch(setAccessToken(tokens))
+
+      if (response.data.user.role =='candidate')
+      {
+        navigate("/candidate")
+      }
+    }
+    catch(error)
+    {
+      console.error("failed to load api",error)
+    }
     
     
   };
@@ -125,14 +151,14 @@ const [showAlert, setShowAlert] = useState(false);
                 setFormData({...formData,role:e.target.value})
             }}>
               <option value="">Select a role</option>
-              <option value="Candidate" >Candidate</option>
-              <option value="Recruiter">Recruiter</option>
+              <option value="candidate" >Candidate</option>
+              <option value="recruiter">Recruiter</option>
               
             </Select>
           </div>
 
           {/* Submit Button */}
-          <Button type="submit" className="mt-2" >
+          <Button type="submit" className="mt-2"  >
             Create Account
           </Button>
 

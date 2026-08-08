@@ -1,9 +1,12 @@
 services:
   backend:
+    
     build:
       context: ./backend
     ports:
       - "8000:8000"
+    volumes:
+      - media_data:/app/media
     develop:
       watch:
        
@@ -66,3 +69,4 @@ services:
 
 volumes:
   postgres_data:
+  media_data:

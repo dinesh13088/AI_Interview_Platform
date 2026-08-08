@@ -39,13 +39,14 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     python -m pip install -r requirements.txt
 
 # Switch to the non-privileged user to run the application.
+COPY --chown=appuser:appuser . .
+
+# Ensure the media upload directory exists and is writable by appuser.
+RUN mkdir -p /app/media && chown -R appuser:appuser /app/media
+
+# Switch to the non-privileged user to run the application.
 USER appuser
 
-# Copy the source code into the container.
-COPY . .
-
-# Expose the port that the application listens on.
 EXPOSE 8000
 
-# Run the application.
 CMD python manage.py runserver 0.0.0.0:8000

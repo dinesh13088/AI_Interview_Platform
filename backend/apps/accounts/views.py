@@ -6,11 +6,11 @@ from rest_framework.status import HTTP_201_CREATED,HTTP_400_BAD_REQUEST,HTTP_200
 from rest_framework.permissions import AllowAny
 from django.http import HttpResponse
 
+
 from .serializers import RegisterSerializer,LoginSerializer
 def apps(request):
     return HttpResponse("hello from apps ")
 
-# Create your views here.
 class RegisterView(APIView):
     permission_classes = [AllowAny]
     def post(self,request):
@@ -19,6 +19,7 @@ class RegisterView(APIView):
         if serializer.is_valid():
 
             user=serializer.save()
+            refresh=RefreshToken.for_user(user=user)
             
             
             return Response(
@@ -30,6 +31,10 @@ class RegisterView(APIView):
                         "email":user.email,
                         "role":user.role
                     },
+                    "tokens":{
+                        "refresh":str(refresh),
+                        "access":str(refresh.access_token)
+                    }
                    
                 },status=HTTP_201_CREATED
             )
@@ -45,6 +50,8 @@ class LoginView(APIView):
             return Response(serializer.errors,status=HTTP_400_BAD_REQUEST)
         
         user=serializer.validated_data.get('user')
+        candidate=serializer.validated_data.get('candidate')
+
         refresh=RefreshToken.for_user(user)
         return Response({
                 "message":"Login successfully",
@@ -57,7 +64,14 @@ class LoginView(APIView):
                 "tokens":{
                     'access':str(refresh.access_token),
                     'refresh':str(refresh)
+                },
+                "candidate":{
+                    'first_name':candidate.first_name,
+                    'last_name':candidate.last_name,
+                    'phone_number':candidate.phone_number,
+                    'linkedin_url':candidate.linkedin_url,
                 }
+
 
 
             },status=HTTP_200_OK)

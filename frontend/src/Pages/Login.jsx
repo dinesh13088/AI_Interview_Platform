@@ -1,20 +1,37 @@
 
 import { Button, Card, Checkbox, Label, TextInput } from "flowbite-react";
-import { useState } from "react";
+import { useEffect, useState ,useRef} from "react";
 import { Link,useNavigate } from "react-router";
 import {login} from '../api/auth.api'
-import {useDispatch} from 'react-redux'
+import {useDispatch,useSelector} from 'react-redux'
 import { setCredenials } from "../store/AuthSlice";
 
 export default function Login() {
   const dispatch=useDispatch()
   const navigate=useNavigate()
+
+  const isAuthenticated=useSelector((state)=>{
+    return state.auth.isAuthenticated
+  })
+
   const [formData,setFormData]=useState({
     email:'',
     password:''
   })
-  const [err,setErr]=useState('')
   
+  const [err,setErr]=useState('')
+  // const isMounted=useRef(false)
+  useEffect(()=>{
+    // if(!isMounted)
+    // {
+    //   return
+    // }
+    if(isAuthenticated){
+       navigate("/home")
+
+    }
+  },[isAuthenticated])
+
   const handleSubmit=async(e)=>{
     e.preventDefault()
     try{
@@ -29,11 +46,8 @@ export default function Login() {
       }
       dispatch(setCredenials(userData))
       if (userData.tokens?.refresh){ localStorage.setItem("refresh",userData.tokens.refresh)}
+     console.log(isAuthenticated)
      
-      navigate("/dashboard")
-     
-
-
     }
     catch(error){
       console.error(error)
