@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import {
   Sidebar,
   SidebarContent,
@@ -17,6 +18,8 @@ import {
   MailOpen, Target, ChartColumn, Bell, Settings, LogOut, Sparkles,
 } from "lucide-react"
 import { useNavigate } from "react-router";
+import { logout } from "@/store/AuthSlice"
+
 
 
 
@@ -56,6 +59,19 @@ const NAV_GROUPS = [
 export function AppSidebar() {
   const [active, setActive] = useState("Dashboard")
   const navigate=useNavigate()
+
+
+const email=useSelector(state=>state.auth.user.email)
+
+const picture_url=useSelector((state)=>"http://localhost:8000"+state.auth.candidate.picture_url)
+
+const first_name=useSelector(state=>state.auth.candidate.first_name)
+
+const last_name=useSelector(state=>state.auth.candidate.last_name)
+const fullname=first_name+" "+last_name
+console.log(picture_url)
+
+const dispatch=useDispatch()
 
   return (
     <Sidebar className="border-r border-border/60">
@@ -114,17 +130,19 @@ export function AppSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <div className="flex items-center gap-2.5 rounded-lg px-2 py-1.5">
-              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-violet-500/10 text-xs font-semibold text-violet-600 dark:text-violet-400">
-                DT
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-violet-500/10 text-xs font-semibold text-violet-600 dark:text-violet-400 overflow-hidden">
+                <img src={picture_url} alt="" className="h-full w-full object-cover object-center" />
               </div>
               <div className="min-w-0 leading-tight">
-                <p className="truncate text-sm font-medium">Dinesh Tamang </p>
-                <p className="truncate text-xs text-muted-foreground">dineshtamang1308@gmail.com</p>
+                <p className="truncate text-sm font-medium">{fullname} </p>
+                <p className="truncate text-xs text-muted-foreground">{email}</p>
               </div>
             </div>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton className="gap-3 rounded-lg text-muted-foreground hover:bg-red-500/10 hover:text-red-500">
+            <SidebarMenuButton onClick={()=>{
+              dispatch(logout())
+            }} className="gap-3 rounded-lg text-muted-foreground hover:bg-red-500/10 hover:text-red-500" >
               <LogOut className="h-4 w-4" />
               Logout
             </SidebarMenuButton>

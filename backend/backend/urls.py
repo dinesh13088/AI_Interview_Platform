@@ -19,6 +19,8 @@ from django.urls import path,include
 
 from django.contrib.auth.models import User
 from .views import home
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 
@@ -28,7 +30,10 @@ urlpatterns = [
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
     path("account/",include("apps.accounts.urls")),
     path('candidate/',include("apps.candidates.urls")),
+    path('recruiter/',include("apps.recruiter.urls")),
+    path('companies/',include("apps.companies.urls")),
     
 
 ]
-
+if settings.DEBUG:
+  urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

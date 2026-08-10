@@ -9,6 +9,7 @@ import { useEffect } from 'react'
 
 function ProtectedRoutes() {
     const isAuthenticated=useSelector((state)=>(state.auth.isAuthenticated))
+    console.log("ProtectedRoutes render, isAuthenticated:", isAuthenticated)
     const dispatch=useDispatch()
     const navigate=useNavigate()
     useEffect(()=>{

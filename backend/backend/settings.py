@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-o@l4vf!5dy0wwqi1fv##(nv*35+pth8tr#%5qxmga@dc%#h4w1
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+X_FRAME_OPTIONS = "SAMEORIGIN"
 
 # Application definition
 
@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     "apps.accounts",
     'corsheaders',
     'apps.candidates',
+    'apps.recruiter',
+    'apps.companies',
 ]
 
 REST_FRAMEWORK = {

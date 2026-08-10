@@ -37,6 +37,7 @@ import {
 } from "recharts";
 
 import { useNavigate } from "react-router";
+import { useSelector } from "react-redux";
 
 
 
@@ -320,6 +321,7 @@ function StatCard({
 export default function CandidateDashboard() {
 
   const navigate = useNavigate();
+  const name=useSelector(state=>state.auth.candidate.first_name)
 
   return (
     <div className="min-h-screen bg-muted/30 p-6">
@@ -331,7 +333,7 @@ export default function CandidateDashboard() {
         <div>
 
           <h1 className="text-2xl font-bold tracking-tight">
-            Welcome back, Dinesh 👋
+            Welcome back, {name} 👋
           </h1>
 
           <p className="mt-1 text-sm text-muted-foreground">

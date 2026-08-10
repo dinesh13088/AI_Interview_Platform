@@ -7,7 +7,7 @@ const initialState={
     accessToken:accessToken ||null,
     user:user,
     isAuthenticated:!!accessToken,
-    canidate:null
+    candidate:null
 };
 export const authSlice=createSlice(
     {
@@ -15,12 +15,11 @@ export const authSlice=createSlice(
         initialState:initialState,
         reducers:{
             setCredenials:(state,action)=>{
-                const {tokens,user,candidate} =action.payload
-                
+                const {tokens,user,candidate}=action.payload   
                 state.accessToken=tokens.access
                 console.log(state.accessToken)
                 state.user=user
-                state.canidate-candidate
+                state.candidate=candidate
                 state.isAuthenticated=true
 
                 console.log(state.isAuthenticated)

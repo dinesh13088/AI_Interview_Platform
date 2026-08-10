@@ -6,7 +6,6 @@ from rest_framework.status import HTTP_201_CREATED,HTTP_400_BAD_REQUEST,HTTP_200
 from rest_framework.permissions import AllowAny
 from django.http import HttpResponse
 
-
 from .serializers import RegisterSerializer,LoginSerializer
 def apps(request):
     return HttpResponse("hello from apps ")
@@ -51,6 +50,8 @@ class LoginView(APIView):
         
         user=serializer.validated_data.get('user')
         candidate=serializer.validated_data.get('candidate')
+        picture_url=candidate.picture.url if candidate.picture else None
+        cv_url=candidate.upload_cv.url if candidate.upload_cv else None
 
         refresh=RefreshToken.for_user(user)
         return Response({
@@ -70,6 +71,8 @@ class LoginView(APIView):
                     'last_name':candidate.last_name,
                     'phone_number':candidate.phone_number,
                     'linkedin_url':candidate.linkedin_url,
+                    'picture_url':picture_url,
+                    'cv_url':cv_url
                 }
 
 

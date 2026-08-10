@@ -15,21 +15,35 @@ import AiPractice from '@/Pages/AiPractice';
 import MyPerfromance from '@/Pages/MyPerfromance';
 import Notifications from '@/Pages/Notifications';
 import Settings from '@/Pages/Settings';
+import Success from '@/Recruiter/Success';
 
 import Home from '../Pages/Home';
 import MyResume from '@/Pages/MyResume';
+import CompanyForm from '@/Recruiter/Company';
+import RecruiterForm from '@/Recruiter/RecruiterForm';
+import RecruiterLogin from '@/Recruiter/RecruiterLogin';
+import RoleChooser from '@/Pages/RoleChooser';
 function AppRoutes() {
     return (
         <div>
             <Routes>
                 <Route>
-                    <Route path='/' element={<App />} />
+                    <Route path='/' element={<RoleChooser/>} />
+                    <Route path='candidate-login' element={<App />} />
+                    <Route path='recruiter-login' element={<RecruiterLogin />} />
                     <Route path='register' element={<Register />} />
                 </Route>
                 <Route element={<ProtectedRoutes />}>
                     <Route path='dashboard' element={<Dashboard />} />
                     <Route path='candidate' element={<RegisterCandidate />} />
+                    <Route path='company-form' element={<CompanyForm />} />
+                    <Route path='recruiter-form' element={<RecruiterForm />} />
+                    <Route path='success' element={<Success />} />
+
+
                     <Route path='home' element={<Home />}>
+
+
                         <Route index element={<Dashboard />} />
                         <Route path='dashboard' element={<Dashboard />} />
                         <Route path='profile' element={<Profile />} />
@@ -43,6 +57,8 @@ function AppRoutes() {
                         <Route path='notifications' element={<Notifications />} />
                         <Route path='settings' element={<Settings />} />
                     </Route>
+                     
+
                 </Route>
 
             </Routes>

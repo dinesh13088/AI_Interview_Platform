@@ -1,64 +1,74 @@
 import { Button, Card, Label, TextInput, Select } from "flowbite-react";
 import { Link, useNavigate } from "react-router";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Dialogue } from "../Components/Dialogue";
 import { create } from "../api/auth.api";
-import {useDispatch} from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { setUser } from "../store/CanidateSlice";
 import { setAccessToken } from "../store/AuthSlice";
 
 
 export default function Register() {
 
-const [showAlert, setShowAlert] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
-  const [formData,setFormData]=useState({
-    username:"",
-    email:"",
-    password:"",
-    confirm_password:"",
-    role:""
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirm_password: "",
+    role: ""
   })
-  const navigate=useNavigate()
+  const navigate = useNavigate()
 
-  const dispatch=useDispatch()
+  const dispatch = useDispatch()
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     setAlertMessage("Registration successful! Welcome aboard!");
     setShowAlert(true);
-    try{
+    try {
       console.log(formData)
-      const response= await create(formData)
+      const response = await create(formData)
       console.log(response.data)
 
       dispatch(setUser(response.data))
-      const tokens=response.data.tokens.access
-      
+      const tokens = response.data.tokens.access
+
 
       dispatch(setAccessToken(tokens))
+      localStorage.setItem("accessToken", tokens)
 
-      if (response.data.user.role =='candidate')
-      {
+      console.log("about to navigate, role:", response.data.user.role)
+
+      if (response.data.user.role == 'candidate') {
         navigate("/candidate")
       }
+      if (response.data.user.role == 'recruiter') {
+        navigate("/company-form",
+          {
+            state: {
+              accessToken:tokens,
+            }
+          }
+        )
+      }
     }
-    catch(error)
-    {
-      console.error("failed to load api",error)
+    catch (error) {
+      console.error("failed to load api", error)
     }
-    
-    
+
+
   };
   useEffect(() => {
     if (!showAlert) return;
 
     const timer = setTimeout(() => {
-        setShowAlert(false);
+      setShowAlert(false);
     }, 5000);
     return () => clearTimeout(timer);
-}, [showAlert]);
+  }, [showAlert]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900 flex-col">
@@ -73,23 +83,23 @@ const [showAlert, setShowAlert] = useState(false);
         </div>
 
         <form className="flex flex-col gap-4" onSubmit={handleSubmit} >
-          
+
           <div>
             <div className="mb-2 block " >
               <Label htmlFor="username" > Username</Label>
               <TextInput
-              id="username"
-              type="text"
-              placeholder="johndoe"
-              value={formData.username}
-              required
-              onChange={(e)=>{
-                setFormData({...formData,username:e.target.value})
-              }}
-               
-            />
+                id="username"
+                type="text"
+                placeholder="johndoe"
+                value={formData.username}
+                required
+                onChange={(e) => {
+                  setFormData({ ...formData, username: e.target.value })
+                }}
+
+              />
             </div>
-            
+
           </div>
 
           {/* Email Field */}
@@ -103,8 +113,8 @@ const [showAlert, setShowAlert] = useState(false);
               placeholder="name@example.com"
               value={formData.email}
               required
-              onChange={(e)=>{
-                setFormData({...formData,email:e.target.value})
+              onChange={(e) => {
+                setFormData({ ...formData, email: e.target.value })
               }}
             />
           </div>
@@ -120,8 +130,8 @@ const [showAlert, setShowAlert] = useState(false);
               placeholder="••••••••"
               value={formData.password}
               required
-              onChange={(e)=>{
-                setFormData({...formData,password:e.target.value})
+              onChange={(e) => {
+                setFormData({ ...formData, password: e.target.value })
               }}
             />
           </div>
@@ -136,8 +146,8 @@ const [showAlert, setShowAlert] = useState(false);
               placeholder="••••••••"
               required
               value={formData.confirm_password}
-              onChange={(e)=>{
-                setFormData({...formData,confirm_password:e.target.value})
+              onChange={(e) => {
+                setFormData({ ...formData, confirm_password: e.target.value })
               }}
             />
           </div>
@@ -147,13 +157,13 @@ const [showAlert, setShowAlert] = useState(false);
             <div className="mb-2 block">
               <Label htmlFor="role" value="Role" />
             </div>
-            <Select id="role" required value={formData.role} onChange={(e)=>{
-                setFormData({...formData,role:e.target.value})
+            <Select id="role" required value={formData.role} onChange={(e) => {
+              setFormData({ ...formData, role: e.target.value })
             }}>
               <option value="">Select a role</option>
               <option value="candidate" >Candidate</option>
               <option value="recruiter">Recruiter</option>
-              
+
             </Select>
           </div>
 
@@ -176,10 +186,10 @@ const [showAlert, setShowAlert] = useState(false);
           </div>
         </form>
       </Card>
-      {showAlert && <Dialogue/> }
-      
+      {showAlert && <Dialogue />}
+
     </div>
-    
-    
+
+
   );
 }
