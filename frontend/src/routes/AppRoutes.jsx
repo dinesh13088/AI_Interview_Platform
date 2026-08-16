@@ -23,12 +23,26 @@ import CompanyForm from '@/Recruiter/Company';
 import RecruiterForm from '@/Recruiter/RecruiterForm';
 import RecruiterLogin from '@/Recruiter/RecruiterLogin';
 import RoleChooser from '@/Pages/RoleChooser';
+
+
+
+import RecruiterDashboard from '@/Recruiter/Home/RecruiterDashboard';
+import RecruiterHome from '@/Recruiter/Home/RecruiterHome';
+import Company from '@/Recruiter/pages/Company';
+import RecruiterJobs from '@/Recruiter/pages/RecruiterJobs';
+import CandidatesList from '@/Recruiter/pages/CandidatesList';
+import RecruiterApplications from '@/Recruiter/pages/RecruiterApplications';
+import InterviewsList from '@/Recruiter/pages/InterviewsList';
+import AIReview from '@/Recruiter/pages/AIReview';
+import Analytics from '@/Recruiter/pages/Analytics';
+import RecruiterNotifications from '@/Recruiter/pages/RecruiterNotifications';
+import RecruiterSettings from '@/Recruiter/pages/RecruiterSettings';
 function AppRoutes() {
     return (
         <div>
             <Routes>
                 <Route>
-                    <Route path='/' element={<RoleChooser/>} />
+                    <Route path='/' element={<RoleChooser />} />
                     <Route path='candidate-login' element={<App />} />
                     <Route path='recruiter-login' element={<RecruiterLogin />} />
                     <Route path='register' element={<Register />} />
@@ -39,6 +53,23 @@ function AppRoutes() {
                     <Route path='company-form' element={<CompanyForm />} />
                     <Route path='recruiter-form' element={<RecruiterForm />} />
                     <Route path='success' element={<Success />} />
+
+                    {/* this is routes for recruiter*/}
+                    <Route path='rhome' element={<RecruiterHome />}>
+                        <Route index element={<RecruiterDashboard />} />
+                        <Route path='rdashboard' element={<RecruiterDashboard />} />
+                        <Route path='company' element={<Company />} />
+                        <Route path='jobs' element={<RecruiterJobs />} />
+                        <Route path='candidates' element={<CandidatesList />} />
+                        <Route path='applications' element={<RecruiterApplications />} />
+                        <Route path='interviews' element={<InterviewsList />} />
+                        <Route path='ai-review' element={<AIReview />} />
+                        <Route path='analytics' element={<Analytics />} />
+                        <Route path='notifications' element={<RecruiterNotifications />} />
+                        <Route path='settings' element={<RecruiterSettings />} />
+
+                    </Route>
+
 
 
                     <Route path='home' element={<Home />}>
@@ -57,7 +88,7 @@ function AppRoutes() {
                         <Route path='notifications' element={<Notifications />} />
                         <Route path='settings' element={<Settings />} />
                     </Route>
-                     
+
 
                 </Route>
 

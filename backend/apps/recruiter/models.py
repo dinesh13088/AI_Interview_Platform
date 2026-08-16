@@ -1,6 +1,8 @@
 from django.db import models
+from ..accounts.models import Account
 
 class RecruiterProfile(models.Model):
+    account=models.OneToOneField(Account,on_delete=models.CASCADE,related_name='recruiter_profile')
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     job_title = models.CharField(max_length=150, blank=True) # e.g., "Technical Talent Acquisition Lead"

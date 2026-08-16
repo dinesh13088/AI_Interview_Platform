@@ -1,52 +1,52 @@
-// import { createSlice } from "@reduxjs/toolkit";
-// import { act } from "react";
-// const accessToken=localStorage.getItem("accessToken")
-// const user=JSON.parse(localStorage.getItem("user")) || null;
+import { createSlice } from "@reduxjs/toolkit";
 
-// const initialState={
-//     accessToken:accessToken ||null,
-//     user:user,
-//     isAuthenticated:!!accessToken,
-//     candidate:null
-// };
-// export const rAuthSlice=createSlice(
-//     {
-//         name:'rauth',
-//         initialState:initialState,
-//         reducers:{
-//             setCredenials:(state,action)=>{
-//                 const {tokens,user,candidate}=action.payload   
-//                 state.accessToken=tokens.access
-//                 console.log(state.accessToken)
-//                 state.user=user
-//                 state.candidate=candidate
-//                 state.isAuthenticated=true
+const accessToken=localStorage.getItem("accessToken")
+const user=JSON.parse(localStorage.getItem("user")) || null;
 
-//                 console.log(state.isAuthenticated)
+const initialState={
+    accessToken:accessToken ||null,
+    user:user,
+    isAuthenticated:!!accessToken,
+    company:null,
+    recruiter:null,
+};
+export const rAuthSlice=createSlice(
+    {
+        name:'rAuth',
+        initialState:initialState,
+        reducers:{
+            setCredenials:(state,action)=>{
+                const {access,user,recruiter,company}=action.payload   
+                state.accessToken=access
+                console.log(state.accessToken)
+                state.user=user
+                state.company=company
+                state.recruiter=recruiter
+                state.isAuthenticated=true
 
-//                 localStorage.setItem('accessToken',tokens.access)
-//                 localStorage.setItem('user',JSON.stringify(user))
+                localStorage.setItem('accessToken',access)
+                
+                localStorage.setItem('user', JSON.stringify(user))
+               
 
-//             },
-//             setAccessToken:(state,action)=>{
-//                 const token=action.payload
-//                 state.accessToken=token
-//                 state.isAuthenticated=true
-//             }
-//             ,
-//             logout:(state)=>{
-//                 state.accessToken=null
-//                 state.user=null
-//                 state.isAuthenticated=false
+            },
+            
+            
+            logout:(state)=>{
+                state.accessToken=null
+                state.user=null
+                state.company=null
+                state.recruiter=null
+                state.isAuthenticated=false
 
-//                 localStorage.removeItem('accessToken')
-//                 localStorage.removeItem('user')
+                localStorage.removeItem('accessToken')
+                localStorage.removeItem('user')
 
-//             }
-//         }
-//     }
-// )
-// export const {setCredenials,logout,setAccessToken}=authSlice.actions
-// export default authSlice.reducer
+            }
+        }
+    }
+)
+export const {setCredenials,logout,setAccessToken}=rAuthSlice.actions
+export default rAuthSlice.reducer
 
 

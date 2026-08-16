@@ -1,10 +1,10 @@
 import { Outlet } from 'react-router'
 import { useSelector } from 'react-redux'
-import App from '../App'
 import { useDispatch } from 'react-redux'
 import { logout } from '../store/AuthSlice'
 import { useNavigate } from 'react-router'
 import { useEffect } from 'react'
+import RoleChooser from '@/Pages/RoleChooser'
 
 
 function ProtectedRoutes() {
@@ -26,7 +26,7 @@ function ProtectedRoutes() {
     },[isAuthenticated,dispatch,navigate])
 
   return (
-    isAuthenticated? <Outlet/>:<App/>
+    isAuthenticated? <Outlet/>:<RoleChooser/>
     
   )
 }

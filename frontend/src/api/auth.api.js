@@ -13,6 +13,16 @@ import api from "./axios";
     }
     
 }
+export const LoginRecruiter=async(data)=>{
+    try{
+        const response=await api.post("recruiter/api/recruiter-login/",data)
+        return response
+    }
+    catch(err)
+    {
+        console.log("recruiter login api error")
+    }
+}
 
 export const create=async(data)=>{
     try{

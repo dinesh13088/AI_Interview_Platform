@@ -1,13 +1,15 @@
 // components/RecruiterLogin.jsx
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { loginRecruiter } from '../api/auth.api';
-import { setUser } from '../store/RecruiterSlice';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router';
+import { LoginRecruiter } from '../api/auth.api';
+import { setCredenials } from '@/store/RecruiterAuthSlice';
+import { setAccessToken } from '@/store/AuthSlice';
 
 const RecruiterLogin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -22,7 +24,7 @@ const RecruiterLogin = () => {
     setLoading(true);
     setError("");
 
-    // Validation
+  
     if (!formData.email.trim()) {
       setError('Email is required');
       setLoading(false);
@@ -34,7 +36,7 @@ const RecruiterLogin = () => {
       return;
     }
 
-    // Email format validation
+    
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
       setError('Please enter a valid email address');
@@ -43,23 +45,17 @@ const RecruiterLogin = () => {
     }
 
     try {
-      const response = await loginRecruiter({
+      const response = await LoginRecruiter({
         email: formData.email.trim(),
         password: formData.password
       });
 
       if (response?.data) {
-        // Store user data and tokens in Redux
-        dispatch(setUser({
-          user: response.data.user,
-          tokens: {
-            access: response.data.access,
-            refresh: response.data.refresh
-          }
-        }));
+     
+        dispatch(setCredenials(response.data));
+        dispatch(setAccessToken(response.data.access))
         
-        // Redirect to dashboard
-        navigate('/recruiter-dashboard');
+        navigate('/rhome');
       }
     } catch (error) {
       console.error('Login error:', error);
@@ -150,7 +146,7 @@ const RecruiterLogin = () => {
             </div>
           </div>
 
-          {/* Remember Me & Forgot Password */}
+          
           <div className="flex items-center justify-between">
             <label className="flex items-center gap-2 cursor-pointer select-none">
               <input
@@ -189,13 +185,13 @@ const RecruiterLogin = () => {
             )}
           </button>
 
-          {/* Register Link */}
+          
           <div className="text-center pt-4 border-t border-slate-200">
             <p className="text-sm text-slate-500">
               Don't have an account?{' '}
               <button
                 type="button"
-                onClick={() => navigate('/company-form')}
+                onClick={() => navigate('/register')}
                 className="text-teal-800 hover:text-teal-900 font-medium hover:underline transition-colors"
                 disabled={loading}
               >

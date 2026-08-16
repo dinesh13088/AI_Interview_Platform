@@ -124,7 +124,7 @@ const RecruiterForm = () => {
             )}
           </p>
           <button
-            onClick={() => navigate('/home')}
+            onClick={() => navigate('/rhome')}
             className="mt-8 text-sm font-medium text-teal-800 hover:text-teal-900 underline underline-offset-4"
           >
             Go to Dashboard →
