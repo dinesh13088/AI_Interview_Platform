@@ -73,11 +73,10 @@ export function RecruiterSidebar() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  // Get recruiter data from Redux store
+
   const email = useSelector(state => state.rAuth?.user?.email)
   const companyName = useSelector(state => state.rAuth?.company?.name)
   
-  // For profile picture (if you have one)
   const picture_url = useSelector(state => 
     state.rAuth?.company?.logo 
       ? "http://localhost:8000" + state.rAuth.company.logo 

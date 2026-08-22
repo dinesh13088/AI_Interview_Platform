@@ -33,7 +33,8 @@ function RegisterCandidate() {
     if (response.data)
     {
       setSubmitted(true);
-      navigate("/home")
+      navigate("candidate-login")
+      localStorage.setItem('accessToken','')
       
     }
     }

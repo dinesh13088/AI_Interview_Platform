@@ -32,6 +32,7 @@ urlpatterns = [
     path('candidate/',include("apps.candidates.urls")),
     path('recruiter/',include("apps.recruiter.urls")),
     path('companies/',include("apps.companies.urls")),
+    path('jobs/',include("apps.jobs.urls")),
     
 
 ]

@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.contrib.auth import authenticate
+
 
 
 class RecruiterView(APIView):
@@ -33,6 +33,7 @@ class RecruiterView(APIView):
                         "website": company.website,
                         "logo": str(company.logo.url) if company.logo else None,
                         "industry": company.industry,
+                        "description":company.description
                     },
                 },
                 status=status.HTTP_201_CREATED,
@@ -71,6 +72,7 @@ class LoginRecruiterView(APIView):
                     "job_title": recruiter.job_title,
                     "phone_number": recruiter.phone_number,
                     "linkedin_url": recruiter.linkedin_url,
+                   
                 },
                 "company": {
                     "id": company.id,
@@ -78,6 +80,7 @@ class LoginRecruiterView(APIView):
                     "website": company.website,
                     "logo": str(company.logo.url) if company.logo else None,
                     "industry": company.industry,
+                    "description":company.description
                     
                 }
             }

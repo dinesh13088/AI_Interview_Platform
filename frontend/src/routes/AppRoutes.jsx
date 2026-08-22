@@ -23,6 +23,7 @@ import CompanyForm from '@/Recruiter/Company';
 import RecruiterForm from '@/Recruiter/RecruiterForm';
 import RecruiterLogin from '@/Recruiter/RecruiterLogin';
 import RoleChooser from '@/Pages/RoleChooser';
+import ApplyJob from '@/Pages/ApplyJob';
 
 
 
@@ -79,7 +80,7 @@ function AppRoutes() {
                         <Route path='dashboard' element={<Dashboard />} />
                         <Route path='profile' element={<Profile />} />
                         <Route path='resume' element={<MyResume />} />
-                        <Route path='jobs' element={<Jobs />} />
+                        
                         <Route path='savedjobs' element={<SavedJobs />} />
                         <Route path='applications' element={<Applications />} />
                         <Route path='interview' element={<Interview />} />
@@ -87,6 +88,13 @@ function AppRoutes() {
                         <Route path='performance' element={<MyPerfromance />} />
                         <Route path='notifications' element={<Notifications />} />
                         <Route path='settings' element={<Settings />} />
+                        <Route path='jobs' element={<Jobs />}/>
+                        <Route path="apply-jobs/:jobId" element={<ApplyJob/>}/> 
+                        
+
+                        
+                        
+                        
                     </Route>
 
 

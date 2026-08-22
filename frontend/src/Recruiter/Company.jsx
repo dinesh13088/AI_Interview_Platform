@@ -20,6 +20,7 @@ const CompanyForm = () => {
     name: '',
     website: '',
     industry: '',
+    description:'',
     logo: null
   });
 
@@ -41,12 +42,13 @@ const CompanyForm = () => {
         name: formData.name.trim(),
         website: formData.website || '',
         industry: formData.industry || '',
-        logo: formData.logo // Will be handled by FormData in the API function
+        logo: formData.logo,
+        description: formData.description.trim() // Will be handled by FormData in the API function
       };
       console.log(accessToken)
 
       const response = await company(dataToSend, accessToken);
-
+      console.log('Response data:', response?.data);
       
       if (response?.data) {
         // Store company data in Redux
@@ -72,6 +74,7 @@ const CompanyForm = () => {
   };
 
   const inputClass = "w-full px-3 py-2.5 text-sm text-slate-900 bg-white border border-slate-300 rounded-sm placeholder:text-slate-300 focus:outline-none focus:ring-2 focus:ring-teal-700/30 focus:border-teal-700 disabled:bg-slate-50 disabled:cursor-not-allowed";
+  const textareaClass = "w-full px-3 py-2.5 text-sm text-slate-900 bg-white border border-slate-300 rounded-sm placeholder:text-slate-300 focus:outline-none focus:ring-2 focus:ring-teal-700/30 focus:border-teal-700 disabled:bg-slate-50 disabled:cursor-not-allowed resize-y min-h-[100px]";
   const labelClass = "block mb-2 text-xs font-semibold tracking-wide uppercase text-slate-500";
 
   if (submitted) {
@@ -152,6 +155,19 @@ const CompanyForm = () => {
                 disabled={loading}
               />
             </div>
+          </div>
+
+          <div className="sm:col-span-2">
+            <label htmlFor="description" className={labelClass}>Description</label>
+            <textarea
+              id="description"
+              placeholder="Tell us about your company, its mission, culture, and what makes it unique..."
+              className={textareaClass}
+              value={formData.description}
+              onChange={(e) => setFormData((prev) => ({ ...prev, description: e.target.value }))}
+              disabled={loading}
+              rows={4}
+            />
           </div>
 
           <div>

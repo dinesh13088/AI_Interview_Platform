@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'apps.candidates',
     'apps.recruiter',
     'apps.companies',
+    'apps.jobs',
 ]
 
 REST_FRAMEWORK = {

@@ -16,7 +16,8 @@ export const rAuthSlice=createSlice(
         initialState:initialState,
         reducers:{
             setCredenials:(state,action)=>{
-                const {access,user,recruiter,company}=action.payload   
+                const {access,user,recruiter,company}=action.payload 
+                console.log(action.payload)  
                 state.accessToken=access
                 console.log(state.accessToken)
                 state.user=user
