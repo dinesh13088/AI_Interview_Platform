@@ -4,28 +4,24 @@ from ..companies.models import Company
 from ..accounts.models import Account
 
 class RecruiterSerializer(serializers.ModelSerializer):
+    company_id = serializers.IntegerField(write_only=True, required=True)
+
     class Meta:
-        company_id=serializers.IntegerField(write_only=True,required=True)
-        model=RecruiterProfile
-        fields=['id', 
-            'first_name', 
-            'last_name', 
-            'job_title', 
-            'company_id',
-            'phone_number', 
-            'linkedin_url', 
-            'company',
-            ]
-        def create(self,validated_data):
-            self.company_id=validated_data.pop('company_id')
+        model = RecruiterProfile
+        fields = [
+            'id', 'first_name', 'last_name', 'job_title',
+            'company_id', 'phone_number', 'linkedin_url', 'company',
+        ]
+        read_only_fields = ['company']
 
-            company=Company.objects.get(id=self.company_id)
+    def create(self, validated_data):
+        company_id = validated_data.pop('company_id')
+        try:
+            company = Company.objects.get(id=company_id)
+        except Company.DoesNotExist:
+            raise serializers.ValidationError({"company_id": "Company not found."})
 
-            recruiter=RecruiterProfile.objects.create(
-                company=company,
-                **validated_data
-            )
-            return recruiter
+        return RecruiterProfile.objects.create(company=company, **validated_data)
 
     
 

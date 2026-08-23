@@ -33,6 +33,8 @@ urlpatterns = [
     path('recruiter/',include("apps.recruiter.urls")),
     path('companies/',include("apps.companies.urls")),
     path('jobs/',include("apps.jobs.urls")),
+    path('applications/',include("apps.applications.urls")),
+    path('interview/',include("apps.interview.urls")),
     
 
 ]

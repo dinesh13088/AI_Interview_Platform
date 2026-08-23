@@ -45,6 +45,10 @@ INSTALLED_APPS = [
     'apps.recruiter',
     'apps.companies',
     'apps.jobs',
+    'apps.applications',
+    'apps.interview',
+    'apps.ai',
+
 ]
 
 REST_FRAMEWORK = {
@@ -163,3 +167,11 @@ MEDIA_ROOT = BASE_DIR/'media'
 MEDIA_URL = '/media/'
 
 AUTH_USER_MODEL = 'accounts.Account'
+
+
+
+
+from dotenv import load_dotenv
+load_dotenv(BASE_DIR / ".env")
+
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
